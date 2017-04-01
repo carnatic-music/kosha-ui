@@ -1,10 +1,12 @@
 (ns app.core
-    (:require [reagent.core :as reagent]
-              [re-frame.core :as re-frame]
-              [re-frisk.core :refer [enable-re-frisk!]]
-              [app.routes :as routes]
-              [app.events] [app.subs] [app.effects]
-              ))
+  (:require [app.effects]
+            [app.events]
+            [app.routes :as routes]
+            [app.subs]
+            [cljsjs.reactable]
+            [reagent.core :as reagent]
+            [re-frame.core :as re-frame]
+            [re-frisk.core :refer [enable-re-frisk!]]))
 
 (def debug?
   ^boolean js/goog.DEBUG)

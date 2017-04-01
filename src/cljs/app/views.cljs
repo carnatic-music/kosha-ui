@@ -1,13 +1,15 @@
 (ns app.views
   "Contains the views, exceot the parent view."
-  (:require [re-frame.core :as re-frame]))
+  (:require [re-frame.core :as re-frame]
+            [reagent.core :as reagent]))
+
+(def Table js/Reactable.Table)
 
 (defn search-results
-  "Displays the search results."
+  "Displays search results in a Reactable Table."
   [results]
-  [:div
-   (for [item results]
-     [:div (:name item)])])
+  (let [displayed-results (mapv #(dissoc % :ragam-id) results)]
+    [:> Table {:data displayed-results}]))
 
 (defn search-bar
   "Displays the search bar and the search button."

@@ -1,11 +1,12 @@
 (defproject app "0.1.0-SNAPSHOT"
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[cljs-ajax "0.5.8"]
+                 [cljsjs/reactable "0.14.1-0"]
+                 [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229"]
                  [reagent "0.6.0"]
                  [re-frame "0.9.1"]
                  [re-frisk "0.3.2"]
-                 [secretary "1.2.3"]
-                 [cljs-ajax "0.5.8"]]
+                 [secretary "1.2.3"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]]
 
