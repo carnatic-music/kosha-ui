@@ -22,3 +22,8 @@
  :search/query
  (fn [{db :search}]
    (:query db)))
+
+(re-frame/reg-sub
+ :search/results
+ (fn [{db :search}]
+   (:results db)))

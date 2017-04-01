@@ -21,12 +21,14 @@
 (re-frame/reg-event-db
  :search/receive-results
  (fn [db [_ search-results]]
-   (assoc-in db [:search :results] search-results)))
+   (-> db
+       (assoc-in [:search :results] search-results)
+       (assoc :loading false))))
 
 (re-frame/reg-event-fx
  :search/ragams!
  (fn [{:keys [db]} [_ query]]
-   {:db db
+   {:db (assoc db :loading true)
     :http-get {:endpoint "search"
                :query query
                :type "ragam"}}))

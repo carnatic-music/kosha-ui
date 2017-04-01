@@ -16,12 +16,9 @@
     (println "dev mode")))
 
 (defn root-view []
-  (let [active-panel (re-frame/subscribe [:active-panel])
-        loading? (re-frame/subscribe [:loading])]
+  (let [active-panel (re-frame/subscribe [:active-panel])]
     (fn []
-      (if @loading?
-        [:p "Loading..."]
-        [routes/show-panel @active-panel]))))
+      [routes/show-panel @active-panel])))
 
 (defn mount-root []
   (re-frame/clear-subscription-cache!)
