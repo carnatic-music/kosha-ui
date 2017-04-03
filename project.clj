@@ -6,9 +6,15 @@
                  [reagent "0.6.0"]
                  [re-frame "0.9.1"]
                  [re-frisk "0.3.2"]
-                 [secretary "1.2.3"]]
+                 [secretary "1.2.3"]
+                 [bidi "1.19.0"]
+                 [ring/ring-core "1.5.0"]
+                 [ring/ring-jetty-adapter "1.3.2"]
+                 [org.clojure/tools.nrepl "0.2.6"]
+                 [org.clojure/tools.cli "0.3.3"]]
 
-  :plugins [[lein-cljsbuild "1.1.4"]]
+  :plugins [[lein-cljsbuild "1.1.4"]
+            [cider/cider-nrepl "0.8.2"]]
 
   :min-lein-version "2.5.3"
 
