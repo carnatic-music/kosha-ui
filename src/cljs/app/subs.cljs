@@ -6,24 +6,28 @@
 (def default-db
   {:name "re-frame"
    :loading false
-   :search {:query ""}})
+   :search {:query ""
+            :results []}})
 
-(re-frame/reg-sub
- :loading
- (fn [db]
-   (:loading db)))
+(defn- loading
+  [db]
+  (:loading db))
 
-(re-frame/reg-sub
- :active-panel
- (fn [db _]
-   (:active-panel db)))
+(defn- active-panel
+  [db _]
+  (:active-panel db))
 
-(re-frame/reg-sub
- :search/query
- (fn [{db :search}]
-   (:query db)))
+(defn- search-query
+  [{db :search}]
+  (:query db))
 
-(re-frame/reg-sub
- :search/results
- (fn [{db :search}]
-   (:results db)))
+(defn- search-results
+  [{db :search}]
+  (:results db))
+
+(defn init
+  []
+  (re-frame/reg-sub :loading loading)
+  (re-frame/reg-sub :active-panel active-panel)
+  (re-frame/reg-sub :search/query search-query)
+  (re-frame/reg-sub :search/results search-results))

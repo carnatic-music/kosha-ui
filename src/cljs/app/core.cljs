@@ -1,8 +1,8 @@
 (ns app.core
-  (:require [app.effects]
-            [app.events]
+  (:require [app.events :as events]
             [app.routes :as routes]
-            [app.subs]
+            [app.subs :as subs]
+            [app.http-client :as http-client]
             [cljsjs.reactable]
             [reagent.core :as reagent]
             [re-frame.core :as re-frame]
@@ -29,6 +29,9 @@
 
 (defn ^:export init []
   (routes/app-routes)
+  (events/init)
+  (subs/init)
+  (http-client/init)
   (re-frame/dispatch-sync [:initialize-db])
   (dev-setup)
   (mount-root))
