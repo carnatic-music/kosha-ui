@@ -3,7 +3,6 @@
             [app.routes :as routes]
             [app.subs :as subs]
             [app.http-client :as http-client]
-            [cljsjs.reactable]
             [reagent.core :as reagent]
             [re-frame.core :as re-frame]
             [re-frisk.core :refer [enable-re-frisk!]]))

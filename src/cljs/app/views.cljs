@@ -1,6 +1,7 @@
 (ns app.views
   "Contains the views, exceot the parent view."
-  (:require [re-frame.core :as re-frame]
+  (:require [cljsjs.reactable]
+            [re-frame.core :as re-frame]
             [reagent.core :as reagent]))
 
 (def Table js/Reactable.Table)
