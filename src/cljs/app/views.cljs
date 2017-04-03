@@ -35,8 +35,7 @@
   (let [query (re-frame/subscribe [:search/query])
         results (re-frame/subscribe [:search/results])
         loading? (re-frame/subscribe [:loading])]
-    (fn []
-      [:div.columns
-       [:div.column.is-offset-2.is-8
-        (search-bar @query @loading?)
-        (search-results @results)]])))
+    [:div.columns
+     [:div.column.is-offset-2.is-8
+      [search-bar @query @loading?]
+      [search-results @results]]]))
