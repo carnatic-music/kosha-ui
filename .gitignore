@@ -1,0 +1,4 @@
+figwheel_server.log
+target/
+.DS_Store
+resources/public/js/compiled
