@@ -8,8 +8,8 @@
 (defn- get-request
   [{:keys [endpoint query type]}]
    (ajax/GET (str api-url endpoint)
-             {:params          {:q query
-                                :t type}
+             {:params          {:query query
+                                :type type}
               :handler         #(re-frame/dispatch [:search/receive-results %])
               :response-format :json
               :keywords?       true
