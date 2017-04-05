@@ -21,7 +21,6 @@
                 :columns [{:key :name        :label "Name"}
                           {:key :arohanam    :label "Arohanam"}
                           {:key :avarohanam  :label "Avarohanam"}
-                          {:key :ragam-link  :label "Wiki Page"}
                           {:key :data-source :label "Source"}]}
       (for [row results]
         [:> Tr {:data row
@@ -62,7 +61,9 @@
    [:div (str "Name: ") (:name ragam)]
    [:div (str "Arohanam: " (:arohanam ragam))]
    [:div (str "Avarohanam: " (:avarohanam ragam))]
-   [:div (str "Wikipedia: " (:wiki_page ragam))]
+   [:div (when (not-empty (:wiki_page ragam))
+           [:a {:href (str "http://en.wikipedia.org" (:wiki_page ragam))}
+            "Wikipedia Page"])]
    [:div (if (:melakartha ragam) "Mela ragam" "Janya Ragam")]
    [:div (:data_source ragam)]])
 
