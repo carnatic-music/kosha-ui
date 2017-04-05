@@ -6,11 +6,10 @@
 (def api-url "http://localhost:8080/")
 
 (defn- get-request
-  [{:keys [endpoint query type]}]
+  [{:keys [endpoint params on-success]}]
    (ajax/GET (str api-url endpoint)
-             {:params          {:query query
-                                :type type}
-              :handler         #(re-frame/dispatch [:search/receive-results %])
+             {:params          params
+              :handler         on-success
               :response-format :json
               :keywords?       true
               }))
