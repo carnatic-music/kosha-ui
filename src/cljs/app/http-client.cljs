@@ -1,7 +1,8 @@
 (ns app.http-client
   "General purpose library of side effects."
-  (:require [re-frame.core :as re-frame]
-            [ajax.core :as ajax]))
+  (:require [ajax.core :as ajax]
+            [re-frame.core :as re-frame]
+            [secretary.core :as secretary]))
 
 (def api-url "http://localhost:8080/")
 
@@ -11,9 +12,14 @@
              {:params          params
               :handler         on-success
               :response-format :json
-              :keywords?       true
-              }))
+              :keywords?       true}))
+
+(defn- change-url
+  [url-string]
+  (secretary/dispatch! url-string)
+  (aset js/location "hash" url-string))
 
 (defn init
   []
-  (re-frame/reg-fx :http-get get-request))
+  (re-frame/reg-fx :http-get get-request)
+  (re-frame/reg-fx :change-url change-url))

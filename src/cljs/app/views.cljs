@@ -25,7 +25,8 @@
                           {:key :data-source :label "Source"}]}
       (for [row results]
         [:> Tr {:data row
-                :on-click #(secretary/dispatch! (str "/ragam/" (:ragam-id row)))}])])])
+                :key (:ragam-id row)
+                :on-click #(re-frame/dispatch [:navigate! (str "/ragam/" (:ragam-id row))])}])])])
 
 (defn- search-bar
   "Displays the search bar and the search button."
