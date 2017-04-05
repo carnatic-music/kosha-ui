@@ -2,9 +2,11 @@
   "Contains the views, except the root view."
   (:require [cljsjs.reactable]
             [re-frame.core :as re-frame]
-            [reagent.core :as reagent]))
+            [reagent.core :as reagent]
+            [secretary.core :as secretary]))
 
 (def Table js/Reactable.Table)
+(def Tr js/Reactable.Tr)
 
 ;;;;;;;;;;;;;;;;;;
 ;; Search Panel ;;
@@ -15,13 +17,15 @@
   [results]
   [:div.column
    (when (not-empty results)
-     [:> Table {:data results
-                :className "table is-striped"
+     [:> Table {:className "table is-striped"
                 :columns [{:key :name        :label "Name"}
                           {:key :arohanam    :label "Arohanam"}
                           {:key :avarohanam  :label "Avarohanam"}
                           {:key :ragam-link  :label "Wiki Page"}
-                          {:key :data-source :label "Source"}]}])])
+                          {:key :data-source :label "Source"}]}
+      (for [row results]
+        [:> Tr {:data row
+                :on-click #(secretary/dispatch! (str "/ragam/" (:ragam-id row)))}])])])
 
 (defn- search-bar
   "Displays the search bar and the search button."
