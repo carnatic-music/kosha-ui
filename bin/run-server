@@ -1,0 +1,6 @@
+if [ -z ${SERVER_PORT} ]
+  then
+    lein run -m kosha-ui.main
+  else
+    lein run -m kosha-ui.main -p ${SERVER_PORT}
+fi
