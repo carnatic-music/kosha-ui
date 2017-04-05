@@ -19,13 +19,17 @@
   (secretary/set-config! :prefix "#")
   (defroute "/" []
     (re-frame/dispatch [:set-active-panel :search-panel]))
+  (defroute #"/ragam/(\d+)" [id]
+    (re-frame/dispatch [:set-active-panel :ragam-panel])
+    (re-frame/dispatch [:ragam/get! id]))
 
-  (defn- panels [panel-name]
+(defn- panels [panel-name]
   (case panel-name
     :search-panel [views/search]
+    :ragam-panel [views/ragam]
     [:div]))
 
-  (defn show-panel [panel-name]
-    [panels panel-name])
+(defn show-panel [panel-name]
+  [panels panel-name])
 
   (hook-browser-navigation!))
