@@ -5,7 +5,8 @@
               [goog.events :as events]
               [goog.history.EventType :as EventType]
               [re-frame.core :as re-frame]
-              [app.views :as views]))
+              [app.views.search :as search-views]
+              [app.views.ragam :as ragam-views]))
 
 (defn hook-browser-navigation! []
   (doto (History.)
@@ -25,8 +26,8 @@
 
 (defn- panels [panel-name]
   (case panel-name
-    :search-panel [views/search]
-    :ragam-panel [views/ragam]
+    :search-panel [search-views/main]
+    :ragam-panel [ragam-views/main]
     [:div]))
 
 (defn show-panel [panel-name]
