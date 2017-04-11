@@ -20,13 +20,7 @@
   [db [_ new-value]]
   (assoc-in db [:search :query] new-value))
 
-(defn- search-ragams-response
-  [db [_ search-results]]
-  (-> db
-       (assoc-in [:search :results] search-results)
-       (assoc :loading false)))
-
-(defn- search-ragams-request
+(defn- search-ragams
   [{:keys [db]} [_ query]]
   {:db (assoc db :loading true)
     :http-get {:endpoint "search"
@@ -34,14 +28,20 @@
                         :type "ragam"}
                :on-success #(re-frame/dispatch [:search/receive-results %])}})
 
-(defn- get-ragam-request
+(defn- receive-results
+  [db [_ search-results]]
+  (-> db
+       (assoc-in [:search :results] search-results)
+       (assoc :loading false)))
+
+(defn- get-ragam
   [{:keys [db]} [_ ragam-id]]
   {:db       (assoc-in db [:ragam :loading] true)
    :http-get {:endpoint (str "ragam" "/" ragam-id)
               :params nil
               :on-success #(re-frame/dispatch [:ragam/receive-data %])}})
 
-(defn- get-ragam-response
+(defn- receive-ragam
   [db [_ ragam-data]]
   (-> db
       (assoc-in [:ragam :data] ragam-data)
@@ -53,7 +53,7 @@
   (re-frame/reg-event-db :set-active-panel set-active-panel)
   (re-frame/reg-event-fx :navigate! navigate-to-url)
   (re-frame/reg-event-db :search/change-query search-change-query)
-  (re-frame/reg-event-db :search/receive-results search-ragams-response)
-  (re-frame/reg-event-fx :search/ragams! search-ragams-request)
-  (re-frame/reg-event-fx :ragam/get! get-ragam-request)
-  (re-frame/reg-event-db :ragam/receive-data get-ragam-response))
+  (re-frame/reg-event-fx :search/ragams! search-ragams)
+  (re-frame/reg-event-db :search/receive-results receive-results)
+  (re-frame/reg-event-fx :ragam/get! get-ragam)
+  (re-frame/reg-event-db :ragam/receive-data receive-ragam))
