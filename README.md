@@ -12,7 +12,13 @@ lein figwheel dev
 ```
 
 #### Production
-To build the front end, run:
+From the project directory, run `bin/deploy` and pass it environment variables `LEINPATH` and `SERVER_PORT`. For example,
+```
+LEINPATH=lein SERVER_PORT=5000 bin/deploy
+```
+
+#### Building
+If you want to serve the front-end assets using another mechanism (e.g. nginx), you can build the front end assets by running:
 ```
 lein clean
 lein cljsbuild once min

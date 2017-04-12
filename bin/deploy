@@ -1,0 +1,8 @@
+#!/bin/sh
+set -ex
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+cd ..
+git pull
+${LEINPATH} clean
+${LEINPATH} cljsbuild once
+nohup bin/run-server > kosha_ui_server.log &

@@ -11,27 +11,49 @@
   [db [_ active-panel]]
   (assoc db :active-panel active-panel))
 
+(defn- navigate-to-url
+  [{:keys [db]} [_ url-string]]
+  {:db db
+   :change-url url-string})
+
 (defn- search-change-query
   [db [_ new-value]]
   (assoc-in db [:search :query] new-value))
-
-(defn- search-receive-results
-  [db [_ search-results]]
-  (-> db
-       (assoc-in [:search :results] search-results)
-       (assoc :loading false)))
 
 (defn- search-ragams
   [{:keys [db]} [_ query]]
   {:db (assoc db :loading true)
     :http-get {:endpoint "search"
-               :query query
-               :type "ragam"}})
+               :params {:query query
+                        :type "ragam"}
+               :on-success #(re-frame/dispatch [:search/receive-results %])}})
+
+(defn- receive-results
+  [db [_ search-results]]
+  (-> db
+       (assoc-in [:search :results] search-results)
+       (assoc :loading false)))
+
+(defn- get-ragam
+  [{:keys [db]} [_ ragam-id]]
+  {:db       (assoc-in db [:ragam :loading] true)
+   :http-get {:endpoint (str "ragam" "/" ragam-id)
+              :params nil
+              :on-success #(re-frame/dispatch [:ragam/receive-data %])}})
+
+(defn- receive-ragam
+  [db [_ ragam-data]]
+  (-> db
+      (assoc-in [:ragam :data] ragam-data)
+      (assoc-in [:ragam :loading] false)))
 
 (defn init
   []
   (re-frame/reg-event-db :initialize-db initialize-db)
   (re-frame/reg-event-db :set-active-panel set-active-panel)
+  (re-frame/reg-event-fx :navigate! navigate-to-url)
   (re-frame/reg-event-db :search/change-query search-change-query)
-  (re-frame/reg-event-db :search/receive-results search-receive-results)
-  (re-frame/reg-event-fx :search/ragams! search-ragams))
+  (re-frame/reg-event-fx :search/ragams! search-ragams)
+  (re-frame/reg-event-db :search/receive-results receive-results)
+  (re-frame/reg-event-fx :ragam/get! get-ragam)
+  (re-frame/reg-event-db :ragam/receive-data receive-ragam))

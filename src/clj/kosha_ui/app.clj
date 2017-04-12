@@ -2,9 +2,15 @@
   (:require [bidi.ring :as br]
             [cider.nrepl :as cider]
             [clojure.tools.nrepl.server :as nrepl]
-            [ring.adapter.jetty :as jetty]))
+            [ring.adapter.jetty :as jetty]
+            [ring.util.response :as res]))
 
-(def routes ["/" [["" (br/->ResourcesMaybe {:prefix "public/"})]]])
+(defn serve-index
+  [& args]
+  (res/resource-response "public/index.html"))
+
+(def routes ["/" [["" (br/->ResourcesMaybe {:prefix "public/"})]
+                  [true serve-index]]])
 
 (def main-handler
   (-> (br/make-handler routes)))
