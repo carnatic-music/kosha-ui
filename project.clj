@@ -13,7 +13,7 @@
                  [org.clojure/tools.nrepl "0.2.6"]
                  [org.clojure/tools.cli "0.3.3"]]
 
-  :plugins [[lein-cljsbuild "1.1.4"]
+  :plugins [[lein-cljsbuild "1.1.5"]
             [cider/cider-nrepl "0.8.2"]]
 
   :min-lein-version "2.5.3"
@@ -40,8 +40,8 @@
      :figwheel     {:on-jsload "app.core/mount-root"}
      :compiler     {:main                 app.core
                     :output-to            "resources/public/js/compiled/app.js"
-                    :output-dir           "resources/public/js/compiled/out"
-                    :asset-path           "js/compiled/out"
+                    :output-dir           "resources/public/js/compiled/dev/out"
+                    :asset-path           "js/compiled/dev/out"
                     :source-map-timestamp true
                     :preloads             [devtools.preload]
                     :external-config      {:devtools/config {:features-to-install :all}}
@@ -51,6 +51,8 @@
      :source-paths ["src/cljs"]
      :compiler     {:main            app.core
                     :output-to       "resources/public/js/compiled/app.js"
+                    :output-dir      "resources/public/js/compiled/min/out"
+                    :asset-path      "js/compiled/min/out"
                     :optimizations   :advanced
                     :closure-defines {goog.DEBUG false}
                     :pretty-print    false}}
