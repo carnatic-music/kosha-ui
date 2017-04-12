@@ -39,7 +39,7 @@
      :source-paths ["src/cljs"]
      :figwheel     {:on-jsload "app.core/mount-root"}
      :compiler     {:main                 app.core
-                    :output-to            "resources/public/js/compiled/app.js"
+                    :output-to            "resources/public/js/app.js"
                     :output-dir           "resources/public/js/compiled/dev/out"
                     :asset-path           "js/compiled/dev/out"
                     :source-map-timestamp true
@@ -50,7 +50,7 @@
     {:id           "min"
      :source-paths ["src/cljs"]
      :compiler     {:main            app.core
-                    :output-to       "resources/public/js/compiled/app.js"
+                    :output-to       "resources/public/js/app.js"
                     :output-dir      "resources/public/js/compiled/min/out"
                     :asset-path      "js/compiled/min/out"
                     :optimizations   :advanced
@@ -65,4 +65,5 @@
                     :optimizations :none}}
     ]}
 
-  )
+  :main kosha-ui.main
+  :aot :all)

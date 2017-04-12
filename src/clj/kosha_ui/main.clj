@@ -1,4 +1,5 @@
 (ns kosha-ui.main
+  (:gen-class)
   (:require [clojure.string :as str]
             [clojure.tools.cli :refer [cli]]
             [kosha-ui.app :as app]))
@@ -14,5 +15,3 @@
               :default 4001 :parse-fn #(Long/parseLong %)])
         [task-group task] _args]
     (app/start! port nrepl-port)))
-
-(apply -main *command-line-args*)

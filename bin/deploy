@@ -3,5 +3,6 @@ set -ex
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 cd ..
 ${LEINPATH} clean
+${LEINPATH} uberjar
 ${LEINPATH} cljsbuild once min
 nohup bin/run-server > kosha_ui_server.log &
