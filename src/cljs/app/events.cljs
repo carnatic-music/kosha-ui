@@ -24,8 +24,7 @@
   [{:keys [db]} [_ query]]
   {:db (assoc db :loading true)
     :http-get {:endpoint "search"
-               :params {:query query
-                        :type "ragam"}
+               :params {:query query}
                :on-success #(re-frame/dispatch [:search/receive-results %])}})
 
 (defn- receive-results

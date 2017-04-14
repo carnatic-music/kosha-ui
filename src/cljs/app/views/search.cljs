@@ -6,20 +6,24 @@
 (def Table js/Reactable.Table)
 (def Tr js/Reactable.Tr)
 
+(defn- search-result-row
+  [row]
+  [:> Tr {:data row
+          :key (str (:type row) "-" (:id row))
+          :on-click #(re-frame/dispatch [:navigate! (str "/" (:type row) "/" (:id row))])}])
+
 (defn- search-results
   "Displays search results in a Reactable Table."
   [results]
   [:div.column
    (when (not-empty results)
      [:> Table {:className "table is-striped"
+                :itemsPerPage 10
                 :columns [{:key :name        :label "Name"}
-                          {:key :arohanam    :label "Arohanam"}
-                          {:key :avarohanam  :label "Avarohanam"}
-                          {:key :data-source :label "Source"}]}
+                          {:key :data-source :label "Source"}
+                          {:key :type        :label "Type"}]}
       (for [row results]
-        [:> Tr {:data row
-                :key (:ragam-id row)
-                :on-click #(re-frame/dispatch [:navigate! (str "/ragam/" (:ragam-id row))])}])])])
+        (search-result-row row))])])
 
 (defn- search-bar
   "Displays the search bar and the search button."
