@@ -8,7 +8,11 @@
    :loading false
    :search {:query ""
             :results []}
-   :ragam  {:loading false}})
+   :ragam  {:loading false
+            :data nil}
+   :kriti {:loading false
+           :data nil
+           :current-track {:url nil}}})
 
 (defn- loading
   [db]
@@ -30,10 +34,20 @@
   [{db :ragam}]
   (:data db))
 
+(defn- kriti-data
+  [{db :kriti}]
+  (:data db))
+
+(defn- current-track
+  [{db :kriti}]
+  (:current-track db))
+
 (defn init
   []
   (re-frame/reg-sub :loading loading)
   (re-frame/reg-sub :active-panel active-panel)
   (re-frame/reg-sub :search/query search-query)
   (re-frame/reg-sub :search/results search-results)
-  (re-frame/reg-sub :ragam/data ragam-data))
+  (re-frame/reg-sub :ragam/data ragam-data)
+  (re-frame/reg-sub :kriti/data kriti-data)
+  (re-frame/reg-sub :kriti/current-track current-track))
