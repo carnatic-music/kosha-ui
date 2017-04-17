@@ -33,11 +33,23 @@
                       :key (:rendition-id track)}
       (str (:kriti-name track) " - " (:main-artist track))])])
 
+(defn- kriti-info-panel
+  [kriti]
+  [:div.card
+   [:div.card-content
+    [:h1.title (:name kriti)]
+    [:h2.subtitle (:composer kriti)]
+    [:div.content
+     [:p (str "Taala: " (or (:taala kriti) "N/A"))]
+     [:p (str "Lyrics: " (or (:lyrics kriti) "N/A"))]]]])
+
 (defn main
   "Kriti panel main container"
   []
   (let [kriti-data (re-frame/subscribe [:kriti/data])
         current-track (re-frame/subscribe [:kriti/current-track])]
     [:div.columns
-     [:div.column.is-one-third
-      [renditions-panel (:renditions @kriti-data) @current-track]]]))
+     [:div.column.is-offset-1.is-4
+      [renditions-panel (:renditions @kriti-data) @current-track]]
+     [:div.column.is-6
+      [kriti-info-panel (:kriti @kriti-data)]]]))
