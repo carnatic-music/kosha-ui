@@ -14,11 +14,11 @@
     [:div.content
      [:div (str "Arohanam: " (:arohanam ragam))]
      [:div (str "Avarohanam: " (:avarohanam ragam))]]
-    [:span.tag.content (:data_source ragam)]]
-   (when (not-empty (:wiki_page ragam))
+    [:span.tag.content (:data-source ragam)]]
+   (when (not-empty (:wiki-page ragam))
      [:div.card-footer
       [:small.card-footer-item
-       [:a {:href (str "http://en.wikipedia.org" (:wiki_page ragam))}
+       [:a {:href (str "http://en.wikipedia.org" (:wiki-page ragam))}
         "View on Wikipedia"]]])])
 
 (defn- parent-ragam
@@ -28,7 +28,7 @@
      [:div.card-content
       [:h6.subtitle.is-6 "Parent Ragam"]
       [:div.notification
-       [:a {:on-click #(re-frame/dispatch [:navigate! (str "/ragam/" (:ragam_id ragam))])}
+       [:a {:on-click #(re-frame/dispatch [:navigate! (str "/ragam/" (:ragam-id ragam))])}
         (:name ragam)]
        [:p [:small (:arohanam ragam)]]
        [:p [:small (:avarohanam ragam)]]]]]))
