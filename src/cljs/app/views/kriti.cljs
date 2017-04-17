@@ -23,9 +23,7 @@
   [:div.panel
    [:p.panel-heading
     "Renditions"]
-   [:div {:className "panel-block has-text-centered"
-          :style {:display :block
-                  :padding-top "30px"}}
+   [:div.panel-block.has-text-centered.audio-container
     [audio-tag (:url current-track)]]
    (for [track renditions]
      [:a.panel-block {:on-click #(re-frame/dispatch [:kriti/play-track track])
