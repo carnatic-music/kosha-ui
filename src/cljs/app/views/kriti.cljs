@@ -6,18 +6,17 @@
 
 (defn- audio-tag
   [track-url]
-  (let [x nil]
+  (let [load-audio-source #(.load (.getElementById js/document "audio-player"))
+        html5-audio-element (fn [track-url]
+                              [:audio {:controls "controls"
+                                       :autoPlay "autoplay"
+                                       :id "audio-player"}
+                               [:span "Sorry, your browser does not support playing audio."]
+                               [:source {:src track-url}]])]
     (reagent/create-class
-     {:component-will-receive-props
-      #(.load (.getElementById js/document "audio-player"))
+     {:component-will-receive-props load-audio-source
       :display-name  "audio-element"
-      :reagent-render
-        (fn [track-url]
-          [:audio {:controls "controls"
-                   :autoPlay "autoplay"
-                   :id "audio-player"}
-           [:span "Sorry, your browser does not support playing audio."]
-           [:source {:src track-url}]])})))
+      :reagent-render html5-audio-element})))
 
 (defn- renditions-panel
   [renditions current-track]
