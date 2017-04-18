@@ -25,6 +25,7 @@
     (re-frame/dispatch [:set-active-panel :ragam-panel])
     (re-frame/dispatch [:ragam/get! id]))
   (defroute #"/kriti/(\d+)" [id]
+    (re-frame/dispatch [:kriti/reset-track])
     (re-frame/dispatch [:set-active-panel :kriti-panel])
     (re-frame/dispatch [:kriti/get! id]))
 

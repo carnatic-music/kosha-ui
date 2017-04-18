@@ -64,6 +64,10 @@
   (-> db
       (assoc-in [:kriti :current-track] track)))
 
+(defn- reset-current-track
+  [db _]
+  (assoc-in db [:kriti :current-track] {:url nil}))
+
 (defn init
   []
   (re-frame/reg-event-db :initialize-db initialize-db)
@@ -76,4 +80,5 @@
   (re-frame/reg-event-db :ragam/receive-data receive-ragam)
   (re-frame/reg-event-fx :kriti/get! get-kriti)
   (re-frame/reg-event-db :kriti/receive-data receive-kriti)
-  (re-frame/reg-event-db :kriti/play-track set-current-track))
+  (re-frame/reg-event-db :kriti/play-track set-current-track)
+  (re-frame/reg-event-db :kriti/reset-track reset-current-track))
