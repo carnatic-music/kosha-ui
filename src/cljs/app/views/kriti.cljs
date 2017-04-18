@@ -38,7 +38,19 @@
     [:h2.subtitle (:composer kriti)]
     [:div.content
      [:p (str "Taala: " (or (:taala kriti) "N/A"))]
-     [:p (str "Lyrics: " (or (:lyrics kriti) "N/A"))]]]])
+     [:p "Ragam: " (or [:a {:on-click #(re-frame/dispatch [:navigate! (str "/ragam/" (:ragam-id kriti))])}
+                        (:ragam-name kriti)]
+                       "N/A")]
+     [:p.tag (:data-source kriti)]]]])
+
+(defn- kriti-lyrics
+  [kriti]
+  (let [lyrics (:lyrics kriti)]
+    [:div.card
+     [:div.card-content
+      [:h2.subtitle "Lyrics"]
+      [:div.content
+       (or lyrics "N/A")]]]))
 
 (defn main
   "Kriti panel main container"
@@ -49,4 +61,5 @@
      [:div.column.is-offset-1.is-4
       [renditions-panel (:renditions @kriti-data) @current-track]]
      [:div.column.is-6
-      [kriti-info-panel (:kriti @kriti-data)]]]))
+      [kriti-info-panel (:kriti @kriti-data)]
+      [kriti-lyrics     (:kriti @kriti-data)]]]))
