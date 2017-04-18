@@ -31,7 +31,7 @@
   [:div.field.has-addons.level-item.column.is-6.is-offset-3
    [:input.input {:type :text
                   :value query
-                  :placeholder "Enter ragam name"
+                  :placeholder "Name of a ragam or a kriti"
                   :on-change #(re-frame/dispatch [:search/change-query (-> % .-target .-value)])}]
    [:button.button
     {:class (if loading? :is-loading :is-primary)

@@ -4,6 +4,7 @@
             [re-frame.core :as re-frame]))
 
 (def Table js/Reactable.Table)
+(def Tr js/Reactable.Tr)
 
 (defn- ragam-info
   [ragam]
@@ -33,31 +34,35 @@
        [:p [:small (:arohanam ragam)]]
        [:p [:small (:avarohanam ragam)]]]]]))
 
+(defn- kritis-of-ragam-row
+  [row]
+  [:> Tr {:className "clickable"
+          :data row
+          :key (:kriti-id row)
+          :on-click #(re-frame/dispatch [:navigate! (str "/kriti/" (:kriti-id row))])}])
+
 (defn- kritis-of-ragam
   [kritis]
   (when (not-empty kritis)
-    [:div.column.container.is-12
-     [:div.card
-      [:div.card-content
-       [:h3.title.is-3 "Kritis"]
-       [:> Table {:data kritis
-                  :className "table is-striped"
-                  :columns [{:key :name        :label "Kriti"}
-                            {:key :composer    :label "Composer"}
-                            {:key :taala       :label "Taala"}
-                            {:key :language    :label "Language"}
-                            {:key :data_source :label "Source"}]
-                  :itemsPerPage 10}]]]]))
+    [:div.card
+     [:div.card-content
+      [:h3.title.is-3 "Kritis"]
+      [:> Table {:className "table is-striped"
+                 :columns [{:key :name        :label "Kriti"}
+                           {:key :composer    :label "Composer"}
+                           {:key :taala       :label "Taala"}
+                           {:key :language    :label "Language"}
+                           {:key :data-source :label "Source"}]
+                 :itemsPerPage 10}
+       (for [row kritis]
+         (kritis-of-ragam-row row))]]]))
 
 
 (defn main
   "Ragam panel parent container."
   []
   (let [ragam-data (re-frame/subscribe [:ragam/data])]
-    [:div
-     [:div.columns.section
-      [:div.column.is-10.is-offset-1.columns
-       [:div.column.is-8.container [ragam-info (:ragam @ragam-data)]]
-       [:div.column.is-4.container [parent-ragam (:parent-ragam @ragam-data)]]]]
-     [:div.columns.section
-      [:div.column.is-10.is-offset-1.columns [kritis-of-ragam (:kritis @ragam-data)]]]]))
+    [:div.columns.is-multiline
+     [:div.column.is-7.is-offset-1 [ragam-info (:ragam @ragam-data)]]
+     [:div.column.is-3 [parent-ragam (:parent-ragam @ragam-data)]]
+     [:div.column.is-10.is-offset-1 [kritis-of-ragam (:kritis @ragam-data)]]]))

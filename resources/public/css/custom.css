@@ -10,3 +10,7 @@ a.reactable-page-button {
 a.reactable-current-page {
     background-color: whitesmoke;
 }
+
+.clickable {
+    cursor: pointer;
+}
