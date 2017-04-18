@@ -1,6 +1,7 @@
 (ns app.views.search
   "Contains views for the search panel."
-  (:require [cljsjs.reactable]
+  (:require [app.views.util :as util]
+            [cljsjs.reactable]
             [re-frame.core :as re-frame]))
 
 (def Table js/Reactable.Table)
@@ -25,26 +26,14 @@
       (for [row results]
         (search-result-row row))])])
 
-(defn- search-bar
-  "Displays the search bar and the search button."
-  [query loading?]
-  [:div.field.has-addons.level-item.column.is-6.is-offset-3
-   [:input.input {:type :text
-                  :value query
-                  :placeholder "Name of a ragam or a kriti"
-                  :on-change #(re-frame/dispatch [:search/change-query (-> % .-target .-value)])}]
-   [:button.button
-    {:class (if loading? :is-loading :is-primary)
-     :on-click #(re-frame/dispatch [:search/ragams! query])}
-    "Search"]])
-
 (defn main
   "Search panel parent container."
   []
   (let [query (re-frame/subscribe [:search/query])
-        results (re-frame/subscribe [:search/results])
-        loading? (re-frame/subscribe [:loading])]
+        loading? (re-frame/subscribe [:loading])
+        results (re-frame/subscribe [:search/results])]
     [:div.columns
      [:div.column.is-offset-2.is-8
-      [search-bar @query @loading?]
+      [:div.column.is-6.is-offset-3
+       [util/search-bar @query @loading? :is-normal]]
       [search-results @results]]]))

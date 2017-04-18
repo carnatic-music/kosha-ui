@@ -1,6 +1,7 @@
 (ns app.views.ragam
   "Contains views for the ragam page."
-  (:require [cljsjs.reactable]
+  (:require [app.views.util :as util]
+            [cljsjs.reactable]
             [re-frame.core :as re-frame]))
 
 (def Table js/Reactable.Table)
@@ -61,8 +62,13 @@
 (defn main
   "Ragam panel parent container."
   []
-  (let [ragam-data (re-frame/subscribe [:ragam/data])]
+  (let [ragam-data (re-frame/subscribe [:ragam/data])
+        search-query (re-frame/subscribe [:search/query])
+        loading? (re-frame/subscribe [:loading])]
     [:div.columns.is-multiline
+     [:div.column.is-12
+      [:div.column.is-4.is-offset-4
+       [util/search-bar @search-query @loading? :is-small]]]
      [:div.column.is-7.is-offset-1 [ragam-info (:ragam @ragam-data)]]
      [:div.column.is-3 [parent-ragam (:parent-ragam @ragam-data)]]
      [:div.column.is-10.is-offset-1 [kritis-of-ragam (:kritis @ragam-data)]]]))
