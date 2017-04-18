@@ -21,6 +21,10 @@
   (secretary/set-config! :prefix "#")
   (defroute "/" []
     (re-frame/dispatch [:set-active-panel :search-panel]))
+  (defroute "/search" [query-params]
+    (re-frame/dispatch [:search/change-query (:query query-params)])
+    (re-frame/dispatch [:search/ragams! (:query query-params)])
+    (re-frame/dispatch [:set-active-panel :search-panel]))
   (defroute #"/ragam/(\d+)" [id]
     (re-frame/dispatch [:set-active-panel :ragam-panel])
     (re-frame/dispatch [:ragam/get! id]))
