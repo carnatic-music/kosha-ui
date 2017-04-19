@@ -1,11 +1,7 @@
 (ns app.views.ragam
   "Contains views for the ragam page."
   (:require [app.views.util :as util]
-            [cljsjs.reactable]
             [re-frame.core :as re-frame]))
-
-(def Table js/Reactable.Table)
-(def Tr js/Reactable.Tr)
 
 (defn- ragam-info
   [ragam]
@@ -37,10 +33,10 @@
 
 (defn- kritis-of-ragam-row
   [row]
-  [:> Tr {:className "clickable"
-          :data row
-          :key (:kriti-id row)
-          :on-click #(re-frame/dispatch [:navigate! (str "/kriti/" (:kriti-id row))])}])
+  [:> util/Tr {:className "clickable"
+               :data      row
+               :key       (:kriti-id row)
+               :on-click  #(re-frame/dispatch [:navigate! (str "/kriti/" (:kriti-id row))])}])
 
 (defn- kritis-of-ragam
   [kritis]
@@ -48,15 +44,15 @@
     [:div.card
      [:div.card-content
       [:h3.title.is-3 "Kritis"]
-      [:> Table {:className "table is-striped"
-                 :itemsPerPage 10
-                 :sortable true
-                 :filterable [:name :composer :taala :language]
-                 :columns [{:key :name        :label "Kriti"}
-                           {:key :composer    :label "Composer"}
-                           {:key :taala       :label "Taala"}
-                           {:key :language    :label "Language"}
-                           {:key :data-source :label "Source"}]}
+      [:> util/Table {:className    "table is-striped"
+                      :itemsPerPage 10
+                      :sortable     true
+                      :filterable   [:name :composer :taala :language]
+                      :columns      [{:key :name        :label "Kriti"}
+                                     {:key :composer    :label "Composer"}
+                                     {:key :taala       :label "Taala"}
+                                     {:key :language    :label "Language"}
+                                     {:key :data-source :label "Source"}]}
        (for [row kritis]
          (kritis-of-ragam-row row))]]]))
 

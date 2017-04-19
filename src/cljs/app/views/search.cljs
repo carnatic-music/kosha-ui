@@ -1,29 +1,26 @@
 (ns app.views.search
   "Contains views for the search panel."
   (:require [app.views.util :as util]
-            [cljsjs.reactable]
             [re-frame.core :as re-frame]))
-
-(def Table js/Reactable.Table)
-(def Tr js/Reactable.Tr)
 
 (defn- search-result-row
   [row]
-  [:> Tr {:data row
-          :key (str (:type row) "-" (:id row))
-          :on-click #(re-frame/dispatch [:navigate! (str "/" (:type row) "/" (:id row))])}])
+  [:> util/Tr {:data      row
+               :className "clickable"
+               :key       (str (:type row) "-" (:id row))
+               :on-click  #(re-frame/dispatch [:navigate! (str "/" (:type row) "/" (:id row))])}])
 
 (defn- search-results
   "Displays search results in a Reactable Table."
   [results]
   [:div.column
    (when (not-empty results)
-     [:> Table {:className "table is-striped"
-                :itemsPerPage 10
-                :sortable true
-                :columns [{:key :name        :label "Name"}
-                          {:key :data-source :label "Source"}
-                          {:key :type        :label "Type"}]}
+     [:> util/Table {:className    "table is-striped"
+                     :itemsPerPage 10
+                     :sortable     true
+                     :columns      [{:key :name        :label "Name"}
+                                    {:key :data-source :label "Source"}
+                                    {:key :type        :label "Type"}]}
       (for [row results]
         (search-result-row row))])])
 

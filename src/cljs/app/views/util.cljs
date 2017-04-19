@@ -1,6 +1,11 @@
 (ns app.views.util
   "Contains views used across multiple panels."
-  (:require [re-frame.core :as re-frame]))
+  (:require [cljsjs.reactable]
+            [re-frame.core :as re-frame]))
+
+(def Table js/Reactable.Table)
+(def Tr js/Reactable.Tr)
+(def rawHTML js/Reactable.unsafe)
 
 (defn- search-input
   [query size-class]

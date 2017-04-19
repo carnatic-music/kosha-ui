@@ -1,7 +1,8 @@
-div.audio-container {
-    display: block;
-    padding-top: 30px;
+.clickable {
+    cursor: pointer;
 }
+
+/* Reactable: Pagination styles */
 
 a.reactable-page-button {
     padding: 8px 18px;
@@ -11,9 +12,7 @@ a.reactable-current-page {
     background-color: whitesmoke;
 }
 
-.clickable {
-    cursor: pointer;
-}
+/* Reactable: Sorting icons */
 
 th.reactable-header-sortable:after {
     content: "\f0dc";
@@ -33,9 +32,22 @@ th.reactable-header-sort-asc:after {
     content: '\f0de';
 }
 
+/* Reactable: Search icon with filter input */
+
 tr.reactable-filterer > td:before {
     content: "\f002";
     font-family: FontAwesome;
     font-size: 12px;
     padding-right: 4px;
+}
+
+/* Kriti page: audio player */
+
+div.audio-container {
+    display: block;
+    padding-top: 30px;
+}
+
+tr.now-playing, tr.now-playing:hover {
+    background-color: aliceblue;
 }
