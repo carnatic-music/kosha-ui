@@ -20,6 +20,7 @@
    (when (not-empty results)
      [:> Table {:className "table is-striped"
                 :itemsPerPage 10
+                :sortable true
                 :columns [{:key :name        :label "Name"}
                           {:key :data-source :label "Source"}
                           {:key :type        :label "Type"}]}

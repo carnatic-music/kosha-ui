@@ -49,12 +49,14 @@
      [:div.card-content
       [:h3.title.is-3 "Kritis"]
       [:> Table {:className "table is-striped"
+                 :itemsPerPage 10
+                 :sortable true
+                 :filterable [:name :composer :taala :language]
                  :columns [{:key :name        :label "Kriti"}
                            {:key :composer    :label "Composer"}
                            {:key :taala       :label "Taala"}
                            {:key :language    :label "Language"}
-                           {:key :data-source :label "Source"}]
-                 :itemsPerPage 10}
+                           {:key :data-source :label "Source"}]}
        (for [row kritis]
          (kritis-of-ragam-row row))]]]))
 
