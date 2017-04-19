@@ -41,6 +41,7 @@
   [:> util/Table {:className  "table"
                   :sortable   [:kritiName :mainArtist :trackNumber :concertId]
                   :filterable [:kritiName :mainArtist :trackNumber :concertId]
+                  :noDataText "There are no renditions available for this kriti."
                   :columns    [{:key :playing :label ""}
                                {:key :kritiName :label "Kriti"}
                                {:key :mainArtist :label "Main Artist"}
@@ -78,12 +79,22 @@
 
 (defn- kriti-lyrics
   [kriti]
-  (let [lyrics (:lyrics kriti)]
+  (when-let [lyrics (:lyrics kriti)]
     [:div.card
      [:div.card-content
       [:h2.subtitle "Lyrics"]
-      [:div.content
-       (or lyrics "N/A")]]]))
+      (if-not (:has-named-stanzas lyrics)
+        [:div.content (:content lyrics)]
+        (let [content (:content lyrics)
+              charanams (:charanams content)]
+          [:div.content
+           [:div.notification "Anupallavi:"
+            [:p (:anupallavi content)]]
+           [:div.notification "Pallavi:"
+            [:p (:pallavi content)]]
+           (for [[ch i] (partition 2 (interleave charanams (range 1 (count charanams))))]
+             [:div.notification (str "Charanam " i ":")
+              [:p ch]])]))]]))
 
 (defn main
   "Kriti panel main container"
