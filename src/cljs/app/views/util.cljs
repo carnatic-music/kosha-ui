@@ -21,5 +21,7 @@
   "Displays the search bar and the search button."
   [query loading? size-class]
   [:div.field.has-addons.level-item
-   [search-input query size-class]
+   [:p.control.has-icon.has-icon-left.is-expanded
+    [search-input query size-class]
+    [:span.icon.is-left.is-small [:i.fa.fa-search]]]
    [search-button query loading? size-class]])
