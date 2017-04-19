@@ -88,10 +88,10 @@
         (let [content (:content lyrics)
               charanams (:charanams content)]
           [:div.content
-           [:div.notification "Anupallavi:"
-            [:p (:anupallavi content)]]
            [:div.notification "Pallavi:"
             [:p (:pallavi content)]]
+           [:div.notification "Anupallavi:"
+            [:p (:anupallavi content)]]
            (for [[ch i] (partition 2 (interleave charanams (range 1 (count charanams))))]
              [:div.notification (str "Charanam " i ":")
               [:p ch]])]))]]))
