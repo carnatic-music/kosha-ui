@@ -8,7 +8,9 @@
                  :class size-class
                  :value query
                  :placeholder "Name of a ragam or a kriti"
-                 :on-change #(re-frame/dispatch [:search/change-query (-> % .-target .-value)])}])
+                 :on-change #(re-frame/dispatch [:search/change-query (-> % .-target .-value)])
+                 :on-key-press #(when (= (.-charCode %) 13)
+                                  (re-frame/dispatch [:navigate! (str "/search?query=" (js/encodeURI query))]))}])
 
 (defn- search-button
   [query loading? size-class]
