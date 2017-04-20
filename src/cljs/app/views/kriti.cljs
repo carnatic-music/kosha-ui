@@ -1,8 +1,19 @@
 (ns app.views.kriti
   "Contains views for the kriti page"
   (:require [app.views.util :as util]
+            [clojure.string :as str]
             [reagent.core :as reagent]
             [re-frame.core :as re-frame]))
+
+(defn decode-url
+  "Decodes base64 encoded SP URL. Not a view."
+  [url]
+  (when url
+    (-> url
+        (str/split #"download\.cgi\?")
+        (second)
+        (js/atob)
+        (#(str "https://spmirror3.ravisnet.com/" %)))))
 
 (defn- audio-tag
   [track-url]
@@ -12,7 +23,7 @@
                                        :autoPlay "autoplay"
                                        :id "audio-player"}
                                [:span "Sorry, your browser does not support playing audio."]
-                               [:source {:src track-url}]])]
+                               [:source {:src (decode-url track-url)}]])]
     (reagent/create-class
      {:component-will-receive-props load-audio-source
       :display-name  "audio-element"
