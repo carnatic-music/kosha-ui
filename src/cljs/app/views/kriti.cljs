@@ -19,10 +19,9 @@
       :reagent-render html5-audio-element})))
 
 (defn- play-icon
-  "A play icon to pass "
+  "A play icon to pass as dangerously set innerHTML."
   []
   (util/rawHTML "<span class=\"icon is-small\"><i class=\"fa fa-play\"></i></span>"))
-
 
 (defn- renditions-table-row
   [track current-track-id]
