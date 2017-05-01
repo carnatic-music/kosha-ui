@@ -9,8 +9,9 @@
   [& args]
   (res/resource-response "public/index.html"))
 
-(def routes ["/" [["" (br/->ResourcesMaybe {:prefix "public/"})]
-                  [true serve-index]]])
+(def routes ["" [["/" serve-index]
+                 ["/css/" (br/->ResourcesMaybe {:prefix "public/css/"})]
+                 ["/js/" (br/->ResourcesMaybe {:prefix "public/js/"})]]])
 
 (def main-handler
   (-> (br/make-handler routes)))

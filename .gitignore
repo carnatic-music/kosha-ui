@@ -2,3 +2,4 @@ figwheel_server.log
 target/
 .DS_Store
 resources/public/js/compiled
+kosha_ui_server.log

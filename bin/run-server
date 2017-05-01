@@ -1,6 +1,6 @@
 if [ -z ${SERVER_PORT} ]
   then
-    lein run -m kosha-ui.main
+    java -jar target/app-0.1.0-SNAPSHOT-standalone.jar
   else
-    lein run -m kosha-ui.main -p ${SERVER_PORT}
+    java -jar target/app-0.1.0-SNAPSHOT-standalone.jar -p ${SERVER_PORT}
 fi

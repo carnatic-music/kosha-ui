@@ -1,8 +1,8 @@
 #!/bin/sh
 set -ex
-cd "$( dirname "${BASH_SOURCE[0]}" )"
-cd ..
-git pull
-${LEINPATH} clean
-${LEINPATH} cljsbuild once
+
+# This script assumes that it is placed in the bin/ directory of the kosha-ui project dir.
+BIN_DIRECTORY="$(cd "$(dirname "$0")" && pwd)"
+cd ${BIN_DIRECTORY}/..
+${LEINPATH} do clean, uberjar, cljsbuild once min
 nohup bin/run-server > kosha_ui_server.log &
