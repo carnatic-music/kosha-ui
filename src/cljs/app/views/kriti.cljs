@@ -93,18 +93,14 @@
     [:div.card
      [:div.card-content
       [:h2.subtitle "Lyrics"]
-      (if-not (:has-named-stanzas lyrics)
+      (if-not (= "true" (:has-named-stanzas lyrics))
         [:div.content (:content lyrics)]
-        (let [content (:content lyrics)
-              charanams (:charanams content)]
-          [:div.content
-           [:div.notification "Pallavi:"
-            [:p (:pallavi content)]]
-           [:div.notification "Anupallavi:"
-            [:p (:anupallavi content)]]
-           (for [[ch i] (partition 2 (interleave charanams (range 1 (count charanams))))]
-             [:div.notification (str "Charanam " i ":")
-              [:p ch]])]))]]))
+        (for [stanza (:content lyrics)]
+          (let [title (name (key stanza))
+                verse (val stanza)]
+            [:div.content
+             [:div.notification (str title ":")
+              [:p verse]]])))]]))
 
 (defn main
   "Kriti panel main container"
