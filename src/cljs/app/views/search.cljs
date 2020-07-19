@@ -1,46 +1,37 @@
 (ns app.views.search
   "Contains views for the search panel."
-  (:require [cljsjs.reactable]
+  (:require [app.views.util :as util]
             [re-frame.core :as re-frame]))
 
-(def Table js/Reactable.Table)
-(def Tr js/Reactable.Tr)
+(defn- search-result-row
+  [row]
+  [:> util/Tr {:data      row
+               :className "clickable"
+               :key       (str (:type row) "-" (:id row))
+               :on-click  #(re-frame/dispatch [:navigate! (str "/" (:type row) "/" (:id row))])}])
 
 (defn- search-results
   "Displays search results in a Reactable Table."
   [results]
   [:div.column
    (when (not-empty results)
-     [:> Table {:className "table is-striped"
-                :columns [{:key :name        :label "Name"}
-                          {:key :arohanam    :label "Arohanam"}
-                          {:key :avarohanam  :label "Avarohanam"}
-                          {:key :data-source :label "Source"}]}
+     [:> util/Table {:className    "table is-striped"
+                     :itemsPerPage 10
+                     :sortable     true
+                     :columns      [{:key :name        :label "Name"}
+                                    {:key :data-source :label "Source"}
+                                    {:key :type        :label "Type"}]}
       (for [row results]
-        [:> Tr {:data row
-                :key (:ragam-id row)
-                :on-click #(re-frame/dispatch [:navigate! (str "/ragam/" (:ragam-id row))])}])])])
-
-(defn- search-bar
-  "Displays the search bar and the search button."
-  [query loading?]
-  [:div.field.has-addons.level-item.column.is-6.is-offset-3
-   [:input.input {:type :text
-                  :value query
-                  :placeholder "Enter ragam name"
-                  :on-change #(re-frame/dispatch [:search/change-query (-> % .-target .-value)])}]
-   [:button.button
-    {:class (if loading? :is-loading :is-primary)
-     :on-click #(re-frame/dispatch [:search/ragams! query])}
-    "Search"]])
+        (search-result-row row))])])
 
 (defn main
   "Search panel parent container."
   []
   (let [query (re-frame/subscribe [:search/query])
-        results (re-frame/subscribe [:search/results])
-        loading? (re-frame/subscribe [:loading])]
+        loading? (re-frame/subscribe [:loading])
+        results (re-frame/subscribe [:search/results])]
     [:div.columns
      [:div.column.is-offset-2.is-8
-      [search-bar @query @loading?]
+      [:div.column.is-6.is-offset-3
+       [util/search-bar @query @loading? :is-normal]]
       [search-results @results]]]))

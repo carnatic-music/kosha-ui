@@ -4,7 +4,7 @@
             [re-frame.core :as re-frame]
             [secretary.core :as secretary]))
 
-(def api-url "http://139.59.37.243:3000/")
+(def api-url "http://localhost:8080/")
 
 (defn- get-request
   [{:keys [endpoint params on-success]}]

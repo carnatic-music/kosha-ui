@@ -10,6 +10,7 @@
   (res/resource-response "public/index.html"))
 
 (def routes ["" [["/" serve-index]
+                 ["/index.html" serve-index]
                  ["/css/" (br/->ResourcesMaybe {:prefix "public/css/"})]
                  ["/js/" (br/->ResourcesMaybe {:prefix "public/js/"})]]])
 

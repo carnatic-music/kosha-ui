@@ -1,0 +1,53 @@
+.clickable {
+    cursor: pointer;
+}
+
+/* Reactable: Pagination styles */
+
+a.reactable-page-button {
+    padding: 8px 18px;
+}
+
+a.reactable-current-page {
+    background-color: whitesmoke;
+}
+
+/* Reactable: Sorting icons */
+
+th.reactable-header-sortable:after {
+    content: "\f0dc";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+
+th.reactable-header-sort-desc:after {
+    content: "\f0dd";
+}
+
+th.reactable-header-sort-asc:after {
+    content: '\f0de';
+}
+
+/* Reactable: Search icon with filter input */
+
+tr.reactable-filterer > td:before {
+    content: "\f002";
+    font-family: FontAwesome;
+    font-size: 12px;
+    padding-right: 4px;
+}
+
+/* Kriti page: audio player */
+
+div.audio-container {
+    display: block;
+    padding-top: 30px;
+}
+
+tr.now-playing, tr.now-playing:hover {
+    background-color: aliceblue;
+}
