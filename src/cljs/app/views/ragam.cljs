@@ -33,6 +33,7 @@
 
 (defn- kritis-of-ragam-row
   [row]
+  ^{:key (str (random-uuid))}
   [:> util/Tr {:className "clickable"
                :data      row
                :key       (:kriti-id row)

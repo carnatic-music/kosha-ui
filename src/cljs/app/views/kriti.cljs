@@ -40,6 +40,7 @@
         track-with-icon (if-not is-playing?
                           (assoc track :playing (play-icon))
                           track)]
+    ^{:key (str (random-uuid))}
     [:> util/Tr {:data      track-with-icon
                  :className (str "clickable"
                                  (when is-playing? " now-playing"))
@@ -58,7 +59,6 @@
                                {:key :trackNumber :label "Track No."}
                                {:key :concertId :label "Concert"}]}
    (for [track renditions]
-     ^{:key (:rendition-id track)}
      (renditions-table-row track current-track-id))])
 
 (defn- renditions-panel
@@ -98,6 +98,7 @@
         (for [stanza (:content lyrics)]
           (let [title (name (key stanza))
                 verse (val stanza)]
+            ^{:key (str (random-uuid))}
             [:div.content
              [:div.notification (str title ":")
               [:p verse]]])))]]))

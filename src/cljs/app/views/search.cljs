@@ -5,6 +5,7 @@
 
 (defn- search-result-row
   [row]
+  ^{:key (str (random-uuid))}
   [:> util/Tr {:data      row
                :className "clickable"
                :key       (str (:type row) "-" (:id row))
